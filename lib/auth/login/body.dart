@@ -2,8 +2,10 @@ import 'package:experiment/auth/auth.dart';
 import 'package:experiment/auth/auth_function.dart';
 import 'package:experiment/helper/colors.dart';
 import 'package:experiment/helper/common_function.dart';
+import 'package:experiment/home/home.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BodyLogin extends StatefulWidget {
   final Size size;
@@ -26,23 +28,24 @@ class _BodyLoginState extends State<BodyLogin> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
 
     return Container(
       width: widget.size.width,
       height: widget.size.height,
-      padding: EdgeInsets.only(top: widget.size.height * 0.15, left: 20, right: 20),
+      padding:
+          EdgeInsets.only(top: widget.size.height  * 0.10, left: 20, right: 20),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Center(
           child: Image.asset('Images/44.jpg', width: widget.size.width * 0.33),
         ),
         SizedBox(
-          height: 50,
+          height: 20,
         ),
         Center(
-          child: Text('Welcome,',
+          child: Text('Welcome',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
         ),
         Center(
@@ -88,7 +91,7 @@ class _BodyLoginState extends State<BodyLogin> {
           )
         ]),
         SizedBox(
-          height: 50,
+          height: 30,
         ),
         TextButton(
           style: ButtonStyle(
@@ -100,14 +103,24 @@ class _BodyLoginState extends State<BodyLogin> {
                   RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ))),
-          onPressed: () => proccedLogin(context, emailController.text, passwordController.text),
+          onPressed: () async {
+            var logInUser = await authService.loginWithUserAndPassword(
+                emailController.text, passwordController.text);
+            if (logInUser == null) {
+              snackBar('Account Not Found', context);
+            } else {
+              launchScreen(context, Home());
+            }
+          },
           child: Center(
               child: Text('Login',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20))),
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16))),
         ),
+
         SizedBox(
           height: 20,
         ),
+
         Center(
             child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +132,6 @@ class _BodyLoginState extends State<BodyLogin> {
             GestureDetector(
               onTap: () {
                 launchScreen(context, Auth(check: 'register'));
-
               },
               child: Text(
                 ' Daftar',
@@ -130,7 +142,47 @@ class _BodyLoginState extends State<BodyLogin> {
               ),
             )
           ],
-        ))
+        )),
+        
+        SizedBox(
+          height: 20,
+        ),
+        OutlinedButton(
+          style: OutlinedButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              backgroundColor: Colors.grey[200],
+              side: BorderSide(color: colorGrey),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              )),
+          onPressed: () async {
+            var logInUser = await authService.signInWithGoogle();
+            // var logInUser = await authService.loginWithUserAndPassword(emailController.text, passwordController.text);
+            // if(logInUser == null){
+            //   snackBar('Account Not Found', context);
+            // }else{
+            //   launchScreen(context, Home());
+            // }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Image.asset("Images/google_icon.png", width: 20),
+              ),
+              Text('Continue with google',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: Colors.black))
+            ],
+          ),// borderSide: BorderSide(color: Colors.blue),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        
       ]),
     );
   }

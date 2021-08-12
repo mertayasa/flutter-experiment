@@ -2,8 +2,10 @@ import 'package:experiment/auth/auth.dart';
 import 'package:experiment/auth/auth_function.dart';
 import 'package:experiment/helper/colors.dart';
 import 'package:experiment/helper/common_function.dart';
+import 'package:experiment/home/home.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BodyRegister extends StatefulWidget {
   final Size size;
@@ -29,23 +31,25 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+
     return Container(
       width: widget.size.width,
       height: widget.size.height,
-      padding: EdgeInsets.only(top: widget.size.height * 0.15, left: 20, right: 20),
+      padding: EdgeInsets.only(top: widget.size.height * 0.20, left: 20, right: 20),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Center(
           child: Image.asset('Images/44.jpg', width: widget.size.width * 0.33),
         ),
         SizedBox(
-          height: 50,
+          height: 20,
         ),
         Center(
-          child: Text('Create account,',
+          child: Text('Create account',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
         ),
         Center(
-          child: Text('Sign up to get started',
+          child: Text('Register to get started',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
         ),
         SizedBox(
@@ -107,7 +111,14 @@ class _BodyRegisterState extends State<BodyRegister> {
                   RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ))),
-          onPressed: () => proccedRegister(context, emailController.text, passwordController.text, passwordConfirmController.text),
+          onPressed: () async {
+            var registerUser = await authService.registerWithUserAndPassword(emailController.text, passwordController.text);
+            if(registerUser == null){
+              snackBar('Fucking Failed', context);
+            }else{
+              launchScreen(context, Home());
+            }
+          },
           child: Center(
               child: Text('Daftar',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20))),

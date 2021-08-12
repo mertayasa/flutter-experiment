@@ -12,9 +12,9 @@ class Auth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: SingleChildScrollView(
+    Size size = MediaQuery.of(context).size ;
+    return SafeArea(
+      child: SingleChildScrollView(
         child: check == null ? BodyLogin(size: size) : BodyRegister(size: size)
       ),
     );
