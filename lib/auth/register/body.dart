@@ -35,8 +35,8 @@ class _BodyRegisterState extends State<BodyRegister> {
 
     return Container(
       width: widget.size.width,
-      height: widget.size.height,
-      padding: EdgeInsets.only(top: widget.size.height * 0.20, left: 20, right: 20),
+      // height: widget.size.height,
+      padding: EdgeInsets.only(top: widget.size.height * 0.10, left: widget.size.width * 0.1, right: widget.size.width * 0.1),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Center(
           child: Image.asset('Images/44.jpg', width: widget.size.width * 0.33),
@@ -45,12 +45,8 @@ class _BodyRegisterState extends State<BodyRegister> {
           height: 20,
         ),
         Center(
-          child: Text('Create account',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-        ),
-        Center(
           child: Text('Register to get started',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         ),
         SizedBox(
           height: 30,
@@ -99,7 +95,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           ),
         ]),
         SizedBox(
-          height: 50,
+          height: 30,
         ),
         TextButton(
           style: ButtonStyle(
@@ -113,18 +109,88 @@ class _BodyRegisterState extends State<BodyRegister> {
               ))),
           onPressed: () async {
             await authService.registerWithUserAndPassword(emailController.text, passwordController.text, context);
-            // if(registerUser == null){
-            //   snackBar('Fucking Failed', context);
-            // }else{
-            //   launchScreen(context, Home());
-            // }
           },
           child: Center(
-              child: Text('Daftar',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20))),
+              child: Text('Register',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))),
         ),
         SizedBox(
           height: 20,
+        ),
+        Center(
+          child: Text(
+            'Or connect using',
+            style: TextStyle(color: textColorGrey.withOpacity(0.5), fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    backgroundColor: Colors.grey[200],
+                    side: BorderSide(color: colorGrey),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    )),
+                onPressed: () async {
+                  await authService.signInWithGoogle();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Image.asset("Images/google_icon.png", width: 20),
+                    ),
+                    Text('Google',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Colors.black))
+                  ],
+                ), // borderSide: BorderSide(color: Colors.blue),
+              ),
+            ),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+            Expanded(
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    backgroundColor: facebookBlue,
+                    side: BorderSide(color: facebookBlue),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    )),
+                onPressed: () async {
+                  snackBar('Sorry, facebook auth currently unavailable', context);
+                  // await authService.signInWithFacebook();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Image.asset("Images/facebook_logo.png", width: 10),
+                    ),
+                    Text('facebook',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Colors.white))
+                  ],
+                ), // borderSide: BorderSide(color: Colors.blue),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 40,
         ),
         Center(
             child: Row(

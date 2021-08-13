@@ -31,9 +31,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(textTheme: GoogleFonts.nunitoTextTheme(
             Theme.of(context).textTheme
           )),
-          home: Scaffold(
-            body: Wrapper(),
-          ),
+          home: Wrapper(),
         ));
   }
 }

@@ -14,7 +14,6 @@ class Wrapper extends StatelessWidget {
         stream: authService.user,
         builder: (_, AsyncSnapshot<User?> snapshot) {
           if(snapshot.connectionState == ConnectionState.active){
-            // print("asdsadasd${snapshot.data}");
             final User? user = snapshot.data;
             return user == null ? Auth() : Home();
           }else{
