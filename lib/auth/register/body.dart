@@ -112,12 +112,12 @@ class _BodyRegisterState extends State<BodyRegister> {
                 borderRadius: BorderRadius.circular(10.0),
               ))),
           onPressed: () async {
-            var registerUser = await authService.registerWithUserAndPassword(emailController.text, passwordController.text);
-            if(registerUser == null){
-              snackBar('Fucking Failed', context);
-            }else{
-              launchScreen(context, Home());
-            }
+            await authService.registerWithUserAndPassword(emailController.text, passwordController.text, context);
+            // if(registerUser == null){
+            //   snackBar('Fucking Failed', context);
+            // }else{
+            //   launchScreen(context, Home());
+            // }
           },
           child: Center(
               child: Text('Daftar',

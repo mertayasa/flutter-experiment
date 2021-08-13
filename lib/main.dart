@@ -8,6 +8,7 @@ import 'package:experiment/waifu_pics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          theme: ThemeData(textTheme: GoogleFonts.nunitoTextTheme(
+            Theme.of(context).textTheme
+          )),
           home: Scaffold(
             body: Wrapper(),
           ),
