@@ -1,21 +1,20 @@
 import 'package:experiment/auth/auth.dart';
 import 'package:experiment/auth/auth_function.dart';
+import 'package:experiment/auth/register/register_screen.dart';
 import 'package:experiment/helper/colors.dart';
 import 'package:experiment/helper/common_function.dart';
-import 'package:experiment/home/home.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BodyLogin extends StatefulWidget {
-  final Size size;
-  const BodyLogin({required this.size});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen();
 
   @override
-  _BodyLoginState createState() => _BodyLoginState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _BodyLoginState extends State<BodyLogin> {
+class _LoginScreenState extends State<LoginScreen> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
@@ -31,23 +30,22 @@ class _BodyLoginState extends State<BodyLogin> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
-
-    return Container(
-      width: widget.size.width,
-      height: widget.size.height,
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: 
+        Container(
+      // width: size.width,
+      // height: size.height,
       padding:
-          EdgeInsets.only(top: widget.size.height * 0.10, left: widget.size.width * 0.1, right: widget.size.width * 0.1),
+          EdgeInsets.only(top: size.height * 0.10, left: size.width * 0.1, right: size.width * 0.1),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Center(
-          child: Image.asset('Images/44.jpg', width: widget.size.width * 0.33),
+          child: Image.asset('Images/44.jpg', width: size.width * 0.33),
         ),
         SizedBox(
           height: 20,
         ),
-        // Center(
-        //   child: Text('Welcome',
-        //       style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-        // ),
         Center(
           child: Text('Login to continue',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
@@ -106,6 +104,8 @@ class _BodyLoginState extends State<BodyLogin> {
           onPressed: () async {
             await authService.loginWithUserAndPassword(
                 emailController.text, passwordController.text, context);
+                FocusScope.of(context).unfocus();
+            Navigator.of(context).popUntil(ModalRoute.withName('/'));
           },
           child: Center(
               child: Text('Login',
@@ -137,6 +137,8 @@ class _BodyLoginState extends State<BodyLogin> {
                     )),
                 onPressed: () async {
                   await authService.signInWithGoogle();
+                  FocusScope.of(context).unfocus();
+                  Navigator.of(context).popUntil(ModalRoute.withName('/'));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -199,7 +201,8 @@ class _BodyLoginState extends State<BodyLogin> {
             ),
             GestureDetector(
               onTap: () {
-                launchScreen(context, Auth(check: 'register'));
+                Navigator.pushNamed(context, '/register');
+                // launchScreen(context, RegisterScreen(size: size));
               },
               child: Text(
                 ' Daftar',
@@ -212,6 +215,7 @@ class _BodyLoginState extends State<BodyLogin> {
           ],
         )),
       ]),
+    ))
     );
   }
 }

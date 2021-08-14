@@ -8,15 +8,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthService with ChangeNotifier {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
 
-  User? _userFromFirebase(auth.User? user){
+  UserModel? _userFromFirebase(auth.User? user){
     if(user == null){
       return null;
     }
 
-    return User(user.uid, user.email);
+    return UserModel(user.uid, user.email);
   }
 
-  Stream<User?>? get user {
+  Stream<UserModel?>? get user {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
@@ -39,7 +39,7 @@ class AuthService with ChangeNotifier {
 
   }
 
-  Future<User?> registerWithUserAndPassword(
+  Future<UserModel?> registerWithUserAndPassword(
     String email,
     String password,
     BuildContext context
@@ -50,8 +50,6 @@ class AuthService with ChangeNotifier {
         password: password
       );
 
-      // print("fuck ${credential.user}");
-      // isAuth(true);
       return _userFromFirebase(credential.user);
     }catch(error){
       snackBar('Unable to register (Invalid email or password)', context);
@@ -100,3 +98,10 @@ void proccedRegister(BuildContext context, email, password, passwordConfirm) {
 void proccedLogin(BuildContext context, email, password) {
   snackBar(email + password, context);
 }
+
+  // set setAuth(bool value){
+  //   isUserAuth = value;
+  //   notifyListeners();
+  // }
+
+  // get isAuth => (isUserAuth == false) ? Auth(check: 'register') : Home();

@@ -1,21 +1,20 @@
 import 'package:experiment/auth/auth.dart';
 import 'package:experiment/auth/auth_function.dart';
+import 'package:experiment/auth/login/login_screen.dart';
 import 'package:experiment/helper/colors.dart';
 import 'package:experiment/helper/common_function.dart';
-import 'package:experiment/home/home.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BodyRegister extends StatefulWidget {
-  final Size size;
-  const BodyRegister({required this.size});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen();
 
   @override
-  _BodyRegisterState createState() => _BodyRegisterState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _BodyRegisterState extends State<BodyRegister> {
+class _RegisterScreenState extends State<RegisterScreen> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var passwordConfirmController = TextEditingController();
@@ -32,14 +31,19 @@ class _BodyRegisterState extends State<BodyRegister> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
-
-    return Container(
-      width: widget.size.width,
-      // height: widget.size.height,
-      padding: EdgeInsets.only(top: widget.size.height * 0.10, left: widget.size.width * 0.1, right: widget.size.width * 0.1),
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
+            body: SingleChildScrollView(
+                child: Container(
+      width: size.width,
+      // height: size.height,
+      padding: EdgeInsets.only(
+          top: size.height * 0.10,
+          left: size.width * 0.1,
+          right: size.width * 0.1),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Center(
-          child: Image.asset('Images/44.jpg', width: widget.size.width * 0.33),
+          child: Image.asset('Images/44.jpg', width: size.width * 0.33),
         ),
         SizedBox(
           height: 20,
@@ -108,7 +112,12 @@ class _BodyRegisterState extends State<BodyRegister> {
                 borderRadius: BorderRadius.circular(10.0),
               ))),
           onPressed: () async {
-            await authService.registerWithUserAndPassword(emailController.text, passwordController.text, context);
+            await authService.registerWithUserAndPassword(
+                emailController.text, passwordController.text, context);
+            // Navigator.pop(context);
+            FocusScope.of(context).unfocus();
+            Navigator.of(context).popUntil(ModalRoute.withName('/'));
+
           },
           child: Center(
               child: Text('Register',
@@ -120,7 +129,10 @@ class _BodyRegisterState extends State<BodyRegister> {
         Center(
           child: Text(
             'Or connect using',
-            style: TextStyle(color: textColorGrey.withOpacity(0.5), fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(
+                color: textColorGrey.withOpacity(0.5),
+                fontWeight: FontWeight.bold,
+                fontSize: 16),
           ),
         ),
         SizedBox(
@@ -140,6 +152,8 @@ class _BodyRegisterState extends State<BodyRegister> {
                     )),
                 onPressed: () async {
                   await authService.signInWithGoogle();
+                  Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                  // authService.setAuth = true;
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -168,7 +182,8 @@ class _BodyRegisterState extends State<BodyRegister> {
                       borderRadius: BorderRadius.circular(10.0),
                     )),
                 onPressed: () async {
-                  snackBar('Sorry, facebook auth currently unavailable', context);
+                  snackBar(
+                      'Sorry, facebook auth currently unavailable', context);
                   // await authService.signInWithFacebook();
                 },
                 child: Row(
@@ -202,7 +217,11 @@ class _BodyRegisterState extends State<BodyRegister> {
             ),
             GestureDetector(
               onTap: () {
-                launchScreen(context, Auth());
+                Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                // Navigator.pushNamed(context, '/login');
+
+                // Navigator.pop(context);
+                // launchScreen(context, LoginScreen(size: size));
               },
               child: Text(
                 ' Login',
@@ -213,8 +232,11 @@ class _BodyRegisterState extends State<BodyRegister> {
               ),
             )
           ],
-        ))
+        )),
+        SizedBox(
+          height: 40,
+        ),
       ]),
-    );
+    )));
   }
 }

@@ -1,10 +1,9 @@
-import 'package:experiment/app_color.dart';
 import 'package:experiment/auth/auth.dart';
 import 'package:experiment/auth/auth_function.dart';
+import 'package:experiment/auth/login/login_screen.dart';
+import 'package:experiment/auth/register/register_screen.dart';
 import 'package:experiment/auth/wrapper.dart';
-import 'package:experiment/fetch_user.dart';
-import 'package:experiment/red_image.dart';
-import 'package:experiment/waifu_pics.dart';
+import 'package:experiment/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,9 +20,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return ChangeNotifierProvider<AuthService>(
+    //     create: (context) => AuthService(),
+    //     child: Consumer<AuthService>(
+    //         builder: (contex, authService, _) => MaterialApp(
+    //       theme: ThemeData(textTheme: GoogleFonts.nunitoTextTheme(
+    //         Theme.of(context).textTheme
+    //       )),
+    //       home: authService.is Auth,
+    //     )));
     return MultiProvider(
         providers: [
-          Provider<AuthService>(
+          ListenableProvider<AuthService>(
             create: (_) => AuthService(),
           ),
         ],
@@ -31,7 +39,13 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(textTheme: GoogleFonts.nunitoTextTheme(
             Theme.of(context).textTheme
           )),
-          home: Wrapper(),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => Wrapper(),
+            '/login': (context) => LoginScreen(), 
+            '/register': (context) => RegisterScreen()
+          },
+          // home: LoginScreen()
         ));
   }
 }

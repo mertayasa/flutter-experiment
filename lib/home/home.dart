@@ -24,8 +24,7 @@ class Home extends StatelessWidget {
             ),
             home: Scaffold(
               appBar: appbar(),
-              // body: UserList(),
-              body: HomeScreen(),
+              body:  HomeScreen(),
             ),
           ),
         ));
@@ -138,7 +137,9 @@ class HomeScreen extends StatelessWidget {
                           ),
                           onPressed: () async {
                             await authService.logOut();
-                            launchScreen(context, Auth());
+                            Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                            // authService.setAuth = false;
+                            // launchScreen(context, Auth());
                           })
                 )
               )
