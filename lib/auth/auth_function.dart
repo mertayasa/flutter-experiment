@@ -3,6 +3,7 @@ import 'package:experiment/model/user.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class AuthService with ChangeNotifier {
@@ -49,6 +50,8 @@ class AuthService with ChangeNotifier {
         email: email, 
         password: password
       );
+
+      // await credential.();
 
       return _userFromFirebase(credential.user);
     }catch(error){

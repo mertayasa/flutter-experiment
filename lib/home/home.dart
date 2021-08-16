@@ -138,8 +138,21 @@ class HomeScreen extends StatelessWidget {
                           onPressed: () async {
                             await authService.logOut();
                             Navigator.of(context).popUntil(ModalRoute.withName('/'));
-                            // authService.setAuth = false;
-                            // launchScreen(context, Auth());
+                          })
+                )
+              ),
+              Consumer<AppColor>(
+                  builder: (context, appColor, _) => Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: TextButton(
+                          child: Icon(Icons.home),
+                          style: TextButton.styleFrom(
+                            backgroundColor: appColor.appColor,
+                            primary: Colors.white,
+                          ),
+                          onPressed: () async {
+                            Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                            // Navigator.pushNamed(context, '/');
                           })
                 )
               )

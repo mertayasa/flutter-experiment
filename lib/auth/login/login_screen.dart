@@ -6,6 +6,7 @@ import 'package:experiment/helper/common_function.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen();
@@ -136,7 +137,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10.0),
                     )),
                 onPressed: () async {
-                  await authService.signInWithGoogle();
+                  var signInGoogle = await authService.signInWithGoogle();
+                  // SharedPreferences prefs = await SharedPreferences.getInstance();
+                  // prefs.setString('email', signInGoogle.additionalUserInfo.profile);
                   FocusScope.of(context).unfocus();
                   Navigator.of(context).popUntil(ModalRoute.withName('/'));
                 },

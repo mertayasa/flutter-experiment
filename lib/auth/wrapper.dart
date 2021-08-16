@@ -1,10 +1,12 @@
 import 'package:experiment/auth/auth.dart';
 import 'package:experiment/auth/auth_function.dart';
 import 'package:experiment/auth/login/login_screen.dart';
+import 'package:experiment/auth/verify.dart';
 import 'package:experiment/home/home.dart';
 import 'package:experiment/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -21,7 +23,8 @@ class _WrapperState extends State<Wrapper> {
         builder: (_, AsyncSnapshot<UserModel?> snapshot) {
           if(snapshot.connectionState == ConnectionState.active){
             final UserModel? user = snapshot.data;
-            return user == null ? loginScreen : Home();
+            // return  VerifyScreen();
+            return user == null ? loginScreen : checkIfVerified();
           }else{
             return Scaffold(body: Center(child: CircularProgressIndicator()));
           }
@@ -29,4 +32,18 @@ class _WrapperState extends State<Wrapper> {
   }
 
   Widget loginScreen = LoginScreen();
+
+  Widget checkIfVerified(){
+    final auth = FirebaseAuth.instance;
+    var user = auth.currentUser;
+    var widget;
+
+    if (!user!.emailVerified) {
+      widget = VerifyScreen();
+    }else{
+      widget = Home();
+    }
+
+    return widget;
+  }
 }
