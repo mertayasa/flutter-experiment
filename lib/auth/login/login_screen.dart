@@ -1,12 +1,9 @@
-import 'package:experiment/auth/auth.dart';
-import 'package:experiment/auth/auth_function.dart';
-import 'package:experiment/auth/register/register_screen.dart';
+import 'package:experiment/services/auth_service.dart';
 import 'package:experiment/helper/colors.dart';
 import 'package:experiment/helper/common_function.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen();
@@ -140,8 +137,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   var signInGoogle = await authService.signInWithGoogle();
                   // SharedPreferences prefs = await SharedPreferences.getInstance();
                   // prefs.setString('email', signInGoogle.additionalUserInfo.profile);
-                  FocusScope.of(context).unfocus();
-                  Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                  // FocusScope.of(context).unfocus();
+                  // Navigator.of(context).popUntil(ModalRoute.withName('/'));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

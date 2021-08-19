@@ -1,6 +1,4 @@
-import 'package:experiment/auth/auth.dart';
-import 'package:experiment/auth/auth_function.dart';
-import 'package:experiment/auth/login/login_screen.dart';
+import 'package:experiment/services/auth_service.dart';
 import 'package:experiment/helper/colors.dart';
 import 'package:experiment/helper/common_function.dart';
 import 'package:flutter/widgets.dart';

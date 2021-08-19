@@ -1,9 +1,7 @@
-import 'package:experiment/auth/auth.dart';
-import 'package:experiment/auth/auth_function.dart';
+import 'package:experiment/services/auth_service.dart';
 import 'package:experiment/auth/login/login_screen.dart';
 import 'package:experiment/auth/register/register_screen.dart';
 import 'package:experiment/auth/wrapper.dart';
-import 'package:experiment/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

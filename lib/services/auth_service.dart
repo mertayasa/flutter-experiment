@@ -66,10 +66,10 @@ class AuthService with ChangeNotifier {
 
   Future<auth.UserCredential> signInWithGoogle() async {
       // Trigger the authentication flow
-      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       // Obtain the auth details from the request
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
 
       // Create a new credential
       final credential = auth.GoogleAuthProvider.credential(

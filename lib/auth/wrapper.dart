@@ -1,5 +1,4 @@
-import 'package:experiment/auth/auth.dart';
-import 'package:experiment/auth/auth_function.dart';
+import 'package:experiment/services/auth_service.dart';
 import 'package:experiment/auth/login/login_screen.dart';
 import 'package:experiment/auth/verify.dart';
 import 'package:experiment/home/home.dart';
