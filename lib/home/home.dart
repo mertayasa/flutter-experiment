@@ -1,8 +1,8 @@
-import 'package:experiment/app_color.dart';
+import 'package:experiment/services/app_color.dart';
 import 'package:experiment/services/auth_service.dart';
-import 'package:experiment/fetch_user.dart';
-import 'package:experiment/red_image.dart';
-import 'package:experiment/waifu_pics.dart';
+import 'package:experiment/home/fetch_user.dart';
+import 'package:experiment/services/red_image.dart';
+import 'package:experiment/home/waifu_pics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
